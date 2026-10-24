@@ -1,0 +1,59 @@
+name: CI-CD
+
+on:
+  push:
+    branches: [main, develop, "feature/**"]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  # 1) CI: instala, roda os testes e envia para o SonarCloud
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Testes automatizados
+        run: pytest --cov=app --cov-report=xml
+
+      - name: Análise SonarCloud
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  # 2) Build da imagem Docker (só confere se o Dockerfile funciona)
+  docker-build:
+    runs-on: ubuntu-latest
+    needs: build-test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build da imagem
+        run: docker build -t estoque-service:ci .
+
+  # 3) CD: develop -> DEV
+  deploy-dev:
+    runs-on: ubuntu-latest
+    needs: docker-build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+    steps:
+      - name: Disparar deploy no Render (DEV)
+        run: curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK_DEV }}"
+
+  # 4) CD: main -> HOMOL
+  deploy-homol:
+    runs-on: ubuntu-latest
+    needs: docker-build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Disparar deploy no Render (HOMOL)
+        run: curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK_HOMOL }}"

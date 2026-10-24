@@ -1,0 +1,9 @@
+# Uso LOCAL (docker compose): monitora o estoque que roda ao lado.
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: estoque-local
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["estoque-service:8000"]

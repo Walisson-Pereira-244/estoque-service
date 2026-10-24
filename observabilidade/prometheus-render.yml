@@ -1,0 +1,16 @@
+# Uso com os serviços publicados no Render (troque pelas URLs reais, SEM https://).
+# Se a dupla monitora os dois serviços, adicionem também os jobs do pedido.
+global:
+  scrape_interval: 30s
+
+scrape_configs:
+  - job_name: estoque-dev
+    scheme: https
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["SEU-ESTOQUE-DEV.onrender.com"]
+  - job_name: estoque-homol
+    scheme: https
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["SEU-ESTOQUE-HOMOL.onrender.com"]
