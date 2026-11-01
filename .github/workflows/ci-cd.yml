@@ -27,7 +27,7 @@ jobs:
         run: pytest --cov=app --cov-report=xml
 
       - name: Análise SonarCloud
-        uses: SonarSource/sonarqube-scan-action@v5
+        uses: SonarSource/sonarqube-scan-action@v7
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
