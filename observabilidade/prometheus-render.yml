@@ -8,9 +8,9 @@ scrape_configs:
     scheme: https
     metrics_path: /metrics
     static_configs:
-      - targets: ["SEU-ESTOQUE-DEV.onrender.com"]
+      - targets: ["estoque-dev-xraj.onrender.com"]
   - job_name: estoque-homol
     scheme: https
     metrics_path: /metrics
     static_configs:
-      - targets: ["SEU-ESTOQUE-HOMOL.onrender.com"]
+      - targets: ["estoque-homol-e6on.onrender.com"]
