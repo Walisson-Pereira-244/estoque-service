@@ -1,4 +1,3 @@
-# Uso LOCAL (docker compose): monitora o estoque que roda ao lado.
 global:
   scrape_interval: 15s
 
@@ -7,3 +6,19 @@ scrape_configs:
     metrics_path: /metrics
     static_configs:
       - targets: ["estoque-service:8000"]
+
+  - job_name: estoque-dev
+    scheme: https
+    scrape_interval: 30s
+    scrape_timeout: 20s
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["estoque-dev-xraj.onrender.com"]
+
+  - job_name: estoque-homol
+    scheme: https
+    scrape_interval: 30s
+    scrape_timeout: 20s
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["estoque-homol-e6on.onrender.com"]
