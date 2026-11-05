@@ -7,8 +7,8 @@ Cadastra produtos, reserva e estorna estoque (ação compensatória da Saga).
 
 | Ambiente | Branch | URL | Swagger |
 |---|---|---|---|
-| DEV | `develop` | https://SEU-ESTOQUE-DEV.onrender.com | habilitado (`/docs`) |
-| HOMOL | `main` | https://SEU-ESTOQUE-HOMOL.onrender.com | desabilitado |
+| DEV | `develop` | https://estoque-dev-xraj.onrender.com| habilitado (`/docs`) |
+| HOMOL | `main` | https://estoque-homol-e6on.onrender.com | desabilitado |
 
 Métricas Prometheus: `/metrics`
 
@@ -69,4 +69,4 @@ git push origin v1.0.0
 
 Prometheus coleta `/metrics` e o Grafana exibe o dashboard (requisições/s, latência p95 e erros 5xx).
 
-![Dashboard](docs/dashboard.png)
+![Dashboard](dashboard.png)
